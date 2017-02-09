@@ -1,6 +1,6 @@
 /*************************************************************
 * ScantegrityAttack.java
-* John Dean
+* Yves A.
 *
 * This program implements a scaled-down version of the Scantegrity
 * voting system and implements an attack on it.
@@ -121,30 +121,7 @@ public class ScantegrityAttack extends JFrame
 
 	q = createTableQPanel();
 
-	/*r = new JTable(
-      new String[][]
-	  {
-		{"", "(0005,1)", "(2,1)"},
-		{"", "(0003,3)", "(4,2)"},
-		{CHECK, "(0002,1)", "(4,3)"},
-		{"", "(0001,3)", "(3,3)"},
-		{CHECK, "(0001,2)", "(4,1)"},
-		{CHECK, "(0005,3)", "(3,2)"},
-		{"", "", ""},
-		{"", "(0003,1)", "(2,3)"},
-		{"", "", ""},
-		{"", "(0002,3)", "(1,1)"},
-		{"", "(0001,1)", "(2,2)"},
-		{"", "(0002,2)", "(5,2)"},
-		{"", "", ""},
-		{CHECK, "(0003,2)", "(5,1)"},
-		{"", "(0005,2)", "(1,3)"},
-      },*/
-        
-        
-    // This is another part of what I did
-    // Yves
-    // filling th r table with data from file
+	
     l = 0;
     line = null;
     String[][] ptrsArr = new String[15][3];
@@ -164,41 +141,7 @@ public class ScantegrityAttack extends JFrame
       System.out.println(e.getClass());
       System.out.println(e.getMessage());
     }
-    // Yves
-    //part ends up here
-        
-
-    /*r = new JTable(
-      new String[][]
-      {
-        {"", "(0005,1)", "(2,1)"},
-        {"", "(0003,3)", "(4,2)"},
-        {"", "(0002,1)", "(4,3)"},
-        {"", "(0001,3)", "(3,3)"},
-        {"", "(0001,2)", "(4,1)"},
-        {"", "(0005,3)", "(3,2)"},
-        {"", "(0004,2)", "(5,3)"},
-        {"", "(0003,1)", "(2,3)"},
-        {"", "(0004,3)", "(3,1)"},
-        {"", "(0002,3)", "(1,1)"},
-        {"", "(0001,1)", "(2,2)"},
-        {"", "(0002,2)", "(5,2)"},
-        {"", "(0004,1)", "(1,2)"},
-        {"", "(0003,2)", "(5,1)"},
-        {"", "(0005,2)", "(1,3)"},
-      },
-	  new String[] {"Flag", "Q-Pointer", "S-Pointer"});
-
-
-	  s = new JTable(
-	  new String[][]
-	  {
-	    {"", "", ""},
-	    {"", "", ""},
-	    {"", CHECK, ""},
-	    {CHECK, "", CHECK},
-	    {CHECK, "", ""}
-	  },*/
+    
       s = new JTable(
       new String[5][3],
 	  new String[] {"Alice", "Bob", "Carl"});
