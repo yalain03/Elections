@@ -1,6 +1,6 @@
 /*************************************************************
 * ScanReadyToVote.java
-* John Dean
+* Yves A.
 *
 * This program implements a scaled-down version of the Scantegrity
 * voting system and implements an attack on it.
@@ -159,28 +159,7 @@ public class ScanReadyToVote extends JFrame
     // Yves
     //part ends up here
 
-/*
-    r = new JTable(
-      new String[][]
-      {
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-        {"", "", ""},
-      },
-      new String[] {"Flag", "Q-Pointer", "S-Pointer"});
-*/
+
 
     s = new JTable(
       new String[][]
@@ -376,48 +355,7 @@ public class ScanReadyToVote extends JFrame
     });
   } // end createContents
   
-  //*********************************************************
-
-  /*
   
-  class Listener implements ActionListener {
-    public void actionPerformed(ActionEvent e) {
-      int[] earns = countEarned();
-      int index = -1;
-      for (int i = 0 ; i < s.getColumnCount(); ++i) {
-        if (e.getSource() == candButtons[i]) {
-          index = i;
-          break;
-        } // end if
-      } // end for i
-      if (isWinner(index, earns)) {
-        JOptionPane.showMessageDialog(null, "This candidate is already the winner",
-          "Attention", JOptionPane.WARNING_MESSAGE);
-      }
-    }
-  }
-  
-  private int[] countEarned() {
-    int earns[] = {0, 0, 0};
-    for (int i = 0; i < s.getRowCount(); ++i) {
-      for (int j = 0; j < s.getColumnCount(); ++j) {
-        if (s.getValueAt(i, j).equals(CHECK)) {
-          earns[i]++;
-        } // end if
-      } // end for j
-    } // end for i
-    return earns;
-  } // end function countEarned
-  
-  private boolean isWinner(int index, int[] earns) {
-    boolean wins = true;
-    for (int i = 0; i < earns.length && i != index; ++i) {
-      wins &= earns[index] > earns[i];
-    }
-    return wins;
-  }
-  
-  */ // This is for tricking the vote
   
   //*************************************************************
 
@@ -596,58 +534,7 @@ public class ScanReadyToVote extends JFrame
     Candidate favorite, Candidate other1, Candidate other2)
   {
     boolean prevMoveWorked = true;
-    /*
-    while (prevMoveWorked &&
-      (favorite.getRiggedCount() <= other1.getRiggedCount() ||
-       favorite.getRiggedCount() <= other2.getRiggedCount()))
-    {
-      if (other1.getRiggedCount() <= 1 && other2.getRiggedCount() <= 1)
-      {
-        prevMoveWorked = false;
-      }
-      else if (other1.getRiggedCount() <= 1)
-      {
-        prevMoveWorked = moveVote(other2, favorite);
-      }
-      else if (other2.getRiggedCount() <= 1)
-      {
-        prevMoveWorked = moveVote(other1, favorite);
-      }
-      
-      else if (other1.getPercentOfCorrectCount() > other2.getPercentOfCorrectCount())
-      {
-        prevMoveWorked = moveVote(other1, favorite);
-      }
-      else if (other2.getPercentOfCorrectCount() > other1.getPercentOfCorrectCount())
-      {
-        prevMoveWorked = moveVote(other2, favorite);
-      }
-      
-      // Rigged count percentages are equal, so use rigged count totals.
-      else if (other1.getRiggedCount() > other2.getRiggedCount())
-      {
-        prevMoveWorked = moveVote(other1, favorite);
-      }
-      else if (other2.getRiggedCount() > other1.getRiggedCount())
-      {
-        prevMoveWorked = moveVote(other2, favorite);
-      }
-      else
-      {
-        prevMoveWorked =
-          moveVote((Math.random() < .5) ? other1 : other2, favorite);
-      }
-    } // end while 
     
-    // Hide pointers for the remaining rows in the RPC process.
-    for (int row=0; row<r.getRowCount(); row++)
-    {
-      if (!((String) r.getValueAt(row, 1)).isEmpty() &&
-          !((String) r.getValueAt(row, 2)).isEmpty())
-      {
-        r.setValueAt("", row, Math.random() < .5 ? 1 : 2);
-      }
-    } // end for  */
     while(!(favorite.getRiggedCount() > other1.getRiggedCount() &&
             favorite.getRiggedCount() > other2.getRiggedCount())) {
       if (other1.getRiggedCount() >= 2) {
@@ -667,42 +554,7 @@ public class ScanReadyToVote extends JFrame
   
   private boolean moveVote(Candidate fromCand, Candidate toCand)
   {
-    /*
-    int fromCandRow;
-    int toCandRow;
-    int hideQPtrRow1;
-    int hideQPtrRow2;
-    String ptr;        // table r pointer, in the form "(row,col)"
     
-    if (((fromCandRow = getRowForMoving(CHECK, fromCand.getId())) == -1) ||
-      ((toCandRow = getRowForMoving("", toCand.getId())) == -1) ||
-      ((hideQPtrRow1 =
-        getRowForBalance(toCand.getId(), fromCandRow, toCandRow, -1)) == -1) ||
-      ((hideQPtrRow2 =
-        getRowForBalance(toCand.getId(), fromCandRow, toCandRow, hideQPtrRow1)) == -1))
-    {
-      return false;
-    }
-    else
-    {
-      // For other candidate, hide check in table s and s-pointer in table r.
-      ptr = (String) r.getValueAt(fromCandRow, 2);
-      s.setValueAt("", getPtrX(ptr)-1, getPtrY(ptr)-1);
-      r.setValueAt("", fromCandRow, 2);
-      fromCand.adjustRiggedCount(-1);
-      
-      // For favorite, display check in table s and hide s-pointer in table r.
-      ptr = (String) r.getValueAt(toCandRow, 2);
-      s.setValueAt(CHECK, getPtrX(ptr)-1, getPtrY(ptr)-1);
-      r.setValueAt("", toCandRow, 2);
-      toCand.adjustRiggedCount(1);
-      
-      r.setValueAt("", hideQPtrRow1, 1);
-      r.setValueAt("", hideQPtrRow2, 1);
-      
-      return true;
-    }
-    */
     String line = "";
     String[] arr;
     int l = 0;
